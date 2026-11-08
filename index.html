@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Справочник Python — слова, функции, типы и модули с запуском кода</title>
+  <meta name="description" content="Справочник по Python на русском: ключевые слова, встроенные функции, типы данных, модули random и time. Примеры запускаются прямо в браузере, а карточки и викторина помогают всё запомнить.">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#0f1a2e">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f1a2e'/%3E%3Cpath d='M14 22l14 10-14 10' fill='none' stroke='%23ffd43b' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M34 44h16' stroke='%236faee8' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+
+  <header class="topbar">
+    <a class="brand" href="#reference" aria-label="Справочник Python — на главную">
+      <span class="brand-prompt" aria-hidden="true">&gt;&gt;&gt;</span>
+      <span class="brand-name">Python</span>
+    </a>
+
+    <nav class="tabs" id="tabs" aria-label="Разделы сайта">
+      <a class="tab" href="#reference" data-view="reference"><span class="tab-icon" data-icon="book"></span><span class="tab-label">Справочник</span></a>
+      <a class="tab" href="#cards" data-view="cards"><span class="tab-icon" data-icon="cards"></span><span class="tab-label">Карточки</span><span class="badge" id="dueBadge" hidden></span></a>
+      <a class="tab" href="#quiz" data-view="quiz"><span class="tab-icon" data-icon="quiz"></span><span class="tab-label">Викторина</span></a>
+      <a class="tab" href="#play" data-view="play"><span class="tab-icon" data-icon="terminal"></span><span class="tab-label">Песочница</span></a>
+    </nav>
+
+    <div class="top-tools">
+      <button class="py-pill" id="pyStatus" type="button" data-state="idle" title="Интерпретатор Python запускается в браузере. Нажмите, чтобы загрузить заранее.">
+        <span class="py-dot" aria-hidden="true"></span>
+        <span class="py-text">Python: не загружен</span>
+      </button>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Переключить тему оформления" title="Светлая или тёмная тема"></button>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+
+    <!-- ===================== СПРАВОЧНИК ===================== -->
+    <section class="view" id="view-reference" aria-labelledby="h-reference">
+      <div class="hero">
+        <div class="hero-text">
+          <h1 id="h-reference" tabindex="-1">Python: справочник, где каждый пример можно запустить</h1>
+          <p class="lead" id="heroLead">Ключевые слова, функции, типы данных и модули random и time — с примерами, которые работают прямо на странице.</p>
+          <div class="hero-actions">
+            <button class="btn primary" id="btnContinue" type="button">Начать с основ</button>
+            <a class="btn" href="#cards">Повторить карточками</a>
+          </div>
+          <div class="hero-progress" id="heroProgress">
+            <div class="meter" role="progressbar" aria-label="Общий прогресс" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
+            <p class="hero-progress-text" id="heroProgressText"></p>
+          </div>
+        </div>
+        <div class="hero-try">
+          <p class="hero-try-hint">Измените код и нажмите «Запустить» — это настоящий Python.</p>
+          <div id="heroRunner"></div>
+        </div>
+      </div>
+
+      <div class="layout">
+        <aside class="side" aria-label="Содержание справочника">
+          <div class="side-inner">
+            <div class="side-total">
+              <svg class="ring" viewBox="0 0 44 44" aria-hidden="true"><circle class="ring-bg" cx="22" cy="22" r="18"/><circle class="ring-fg" id="ringFg" cx="22" cy="22" r="18" pathLength="100"/></svg>
+              <p class="side-total-text"><strong id="sideTotalPct">0%</strong><span id="sideTotalSub"></span></p>
+            </div>
+            <nav class="side-nav" id="sideNav" aria-label="Разделы справочника"></nav>
+            <button class="link-btn" id="resetProgress" type="button">Сбросить прогресс</button>
+            <p class="side-warn" id="storageWarn" hidden>Браузер не даёт сохранять данные, поэтому прогресс пропадёт после закрытия страницы.</p>
+          </div>
+        </aside>
+
+        <div class="content">
+          <details class="about" id="about">
+            <summary>Что такое Python и краткая история</summary>
+            <div class="about-body">
+              <p><strong>Python</strong> — высокоуровневый язык программирования, который легко читать и писать. Его применяют в веб-разработке, анализе данных, искусственном интеллекте, автоматизации и научных расчётах. Структуру кода в Python задают отступы, поэтому программы на нём читаются почти как обычный текст.</p>
+              <p>Язык в конце 1980-х начал создавать голландский программист <strong>Гвидо ван Россум</strong> (Guido van Rossum) в институте CWI в Нидерландах. Название он дал в честь любимого комедийного шоу «Monty Python’s Flying Circus».</p>
+              <ol class="timeline" id="timeline"></ol>
+            </div>
+          </details>
+
+          <div class="toolbar" id="toolbar">
+            <div class="search">
+              <span class="search-icon" data-icon="search" aria-hidden="true"></span>
+              <input id="search" type="search" placeholder="Найти: lambda, randint, while, dict…" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Поиск по справочнику">
+              <button class="icon-btn small" id="searchClear" type="button" aria-label="Очистить поиск" hidden></button>
+            </div>
+            <div class="filters">
+              <div class="chip-group" role="group" aria-label="Фильтр по уровню" data-filter="level">
+                <button class="chip" type="button" data-value="0" aria-pressed="true">Все уровни</button>
+                <button class="chip" type="button" data-value="1" aria-pressed="false">Основы</button>
+                <button class="chip" type="button" data-value="2" aria-pressed="false">Дальше</button>
+                <button class="chip" type="button" data-value="3" aria-pressed="false">Продвинутое</button>
+              </div>
+              <div class="chip-group" role="group" aria-label="Фильтр по статусу" data-filter="status">
+                <button class="chip" type="button" data-value="all" aria-pressed="true">Все</button>
+                <button class="chip" type="button" data-value="new" aria-pressed="false">Не выучено</button>
+                <button class="chip" type="button" data-value="learned" aria-pressed="false">Выучено</button>
+              </div>
+            </div>
+            <p class="count" id="resultCount" aria-live="polite"></p>
+          </div>
+
+          <div id="sections"></div>
+
+          <div class="empty" id="emptyState" hidden>
+            <p class="empty-title">Ничего не найдено</p>
+            <p>Попробуйте другое слово или снимите фильтры.</p>
+            <button class="btn" id="emptyReset" type="button">Сбросить поиск и фильтры</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== КАРТОЧКИ ===================== -->
+    <section class="view narrow" id="view-cards" aria-labelledby="h-cards" hidden>
+      <h1 class="view-title" id="h-cards" tabindex="-1">Карточки для запоминания</h1>
+      <p class="view-lead">Сначала вспомните ответ, потом откройте его. «Знаю» отодвигает карточку на потом, «Не знаю» вернёт её уже скоро.</p>
+      <div class="setup" id="cardsSetup">
+        <label class="field"><span>Раздел</span><select id="cardsScope"></select></label>
+        <label class="field"><span>Уровень</span>
+          <select id="cardsLevel">
+            <option value="0">Все уровни</option>
+            <option value="1">Основы</option>
+            <option value="2">Дальше</option>
+            <option value="3">Продвинутое</option>
+          </select>
+        </label>
+        <button class="btn primary" id="cardsStart" type="button">Начать раунд</button>
+      </div>
+      <div id="cardsStage" class="stage"></div>
+    </section>
+
+    <!-- ===================== ВИКТОРИНА ===================== -->
+    <section class="view narrow" id="view-quiz" aria-labelledby="h-quiz" hidden>
+      <h1 class="view-title" id="h-quiz" tabindex="-1">Викторина</h1>
+      <p class="view-lead">Десять вопросов с выбором ответа. Верные ответы приближают понятие к статусу «выучено», ошибки — возвращают его в повторение.</p>
+      <div class="setup" id="quizSetup">
+        <label class="field"><span>Раздел</span><select id="quizScope"></select></label>
+        <label class="field"><span>Уровень</span>
+          <select id="quizLevel">
+            <option value="0">Все уровни</option>
+            <option value="1">Основы</option>
+            <option value="2">Дальше</option>
+            <option value="3">Продвинутое</option>
+          </select>
+        </label>
+        <button class="btn primary" id="quizStart" type="button">Начать викторину</button>
+      </div>
+      <div id="quizStage" class="stage"></div>
+    </section>
+
+    <!-- ===================== ПЕСОЧНИЦА ===================== -->
+    <section class="view" id="view-play" aria-labelledby="h-play" hidden>
+      <div class="play-head">
+        <h1 class="view-title" id="h-play" tabindex="-1">Песочница</h1>
+        <p class="view-lead">Пишите любой код на Python и запускайте. Работают <code>import</code>, стандартная библиотека и <code>input()</code> — ответы вводите в поле справа.</p>
+      </div>
+      <div id="playRunner"></div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Справочник основан на материалах Nurmurat. Перевод на русский, новые примеры, карточки и викторина добавлены при доработке.</p>
+    <p>Python выполняется в вашем браузере (Pyodide), код никуда не отправляется. Прогресс хранится только на этом устройстве.</p>
+  </footer>
+
+  <button class="to-top" id="toTop" type="button" aria-label="Наверх" hidden></button>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <noscript><p class="noscript">Для работы справочника нужен включённый JavaScript.</p></noscript>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
